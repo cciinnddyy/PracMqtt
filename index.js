@@ -4,7 +4,8 @@ var axios = require('axios')
 
 require("dotenv").config()
 
-var client  = mqtt.connect(`mqtt://${mqttBroker}:1883`)
+var client  = mqtt.connect(`mqtt://${mqttBroker}:1883`,{username:`${mqttuser}`,password:`${mqttPassword}`})
+//{options of mqtt}
 client.on('connect', function () {
 
         client.subscribe('pulse',function(err){
