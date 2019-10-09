@@ -2,22 +2,54 @@ var mqtt = require('mqtt')
 
 var axios = require('axios')
 
-require("dotenv").config()
+var dotenv = require('dotenv')
 
-var client  = mqtt.connect(`mqtt://${mqttBroker}:1883`,{username:`${mqttuser}`,password:`${mqttPassword}`})
+dotenv.config()
+
+console.log(`mqtt://${process.env.mqttBroker}:1883`)
+console.log(`${process.env.mqttuser}`);
+var client  = mqtt.connect(`mqtt://${process.env.mqttBroker}:1883`,{
+    username:`${process.env.mqttuser}`,password:`${process.env.mqttPass}`})
 //{options of mqtt}
-client.on('connect', function () {
 
-        client.subscribe('pulse',function(err){
+var topics = ['pulse','gps']
+
+client.on('connect', function () {
+    
+        client.subscribe(topics,{qos:1},function(err){
+            
             if(!err){
-                console.log("Success");
+                console.log("Subscribe Success");
             }
+
+
         })
+
+        
     
 })
 
+
+var nearbysearch = {
+    //location: android application => mqtt broker => here
+    //key:
+    //radius:
+    //type:restaurant
+
+}
+
+nearbysearch =JSON.stringify(nearbysearch);
+
 //message event 
 client.on('message', function (topic, message) {
+
+if(topic=='gps'){
+    //time?
+    //call google api and storage api
+    axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?${nearbysearch}`).then(function(){
+    
+    })
+}
 
 
 context = message.toString();

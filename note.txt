@@ -1,0 +1,5 @@
+Two way to implement location-based android application
+    android.location
+    google play service APK
+
+which way is better?
