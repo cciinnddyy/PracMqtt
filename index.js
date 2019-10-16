@@ -4,6 +4,8 @@ var axios = require('axios')
 
 var dotenv = require('dotenv')
 
+var pulseController = require('./pulseController')
+
 dotenv.config()
 
 console.log(`mqtt://${process.env.mqttBroker}:1883`)
@@ -48,6 +50,24 @@ switch(topic){
         console.log("gps");
     case "pulse":
         console.log("pulse");
+
+        // send message to the web server
+        //call web server
+        //use promise
+        
+
+
+        pulseController.postPulse().then(response=>{
+            if(response){
+                console.log(response);
+            }
+        }).catch(err=>{
+            console.log(err);
+        })
+            
+        
+
+        console.log("pulse data sync");
     default:
         console.log("fails");
     
@@ -55,7 +75,7 @@ switch(topic){
 
 
 
-if(topic=='gps'){
+//if(topic=='gps'){
     
 
     //time?
@@ -64,7 +84,7 @@ if(topic=='gps'){
     //    console.log(response);
     //})
 
-    console.log(message.toString());
-}
+    //console.log(message.toString());
+//}
 
 })
