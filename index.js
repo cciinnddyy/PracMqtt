@@ -32,7 +32,7 @@ client.on('connect', function () {
 
 var nearbysearch = {
     //location: android application => mqtt broker => here
-    //key:
+    key:`${process.env.apikey}`
     //radius:
     //type:restaurant
 
@@ -43,15 +43,28 @@ nearbysearch =JSON.stringify(nearbysearch);
 //message event 
 client.on('message', function (topic, message) {
 
-if(topic=='gps'){
-    //time?
-    //call google api and storage api
-    axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?${nearbysearch}`).then(function(){
+switch(topic){
+    case "gps":
+        console.log("gps");
+    case "pulse":
+        console.log("pulse");
+    default:
+        console.log("fails");
     
-    })
 }
 
 
-context = message.toString();
-console.log(context)
+
+if(topic=='gps'){
+    
+
+    //time?
+    //call google api and storage api
+    //axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?${nearbysearch}`).then(function(response){
+    //    console.log(response);
+    //})
+
+    console.log(message.toString());
+}
+
 })
